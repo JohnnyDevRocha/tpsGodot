@@ -1,0 +1,45 @@
+[gd_scene load_steps=8 format=3 uid="uid://os8o8hi0i6f2"]
+
+[ext_resource type="Script" path="res://src/Character/PlayerManager.cs" id="1_r60ew"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rlccb"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cwuya"]
+albedo_color = Color(0.0253638, 0.0253638, 0.0253638, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ykgli"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n4j16"]
+albedo_color = Color(0.764624, 0.32864, 0.969208, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_o01me"]
+
+[sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_yglq4"]
+
+[node name="PlayerMechanics" type="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("1_r60ew")
+
+[node name="Body" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_rlccb")
+
+[node name="MeshPlayer" type="MeshInstance3D" parent="Body"]
+material_override = SubResource("StandardMaterial3D_cwuya")
+mesh = SubResource("CapsuleMesh_ykgli")
+
+[node name="Eyes" type="MeshInstance3D" parent="Body/MeshPlayer"]
+transform = Transform3D(0.702428, 0, 0, 0, 0.359381, 0, 0, 0, 0.363959, 0, 0.429874, -0.376026)
+material_override = SubResource("StandardMaterial3D_n4j16")
+mesh = SubResource("BoxMesh_o01me")
+
+[node name="camPivot" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965925, 0, 0.60377, 0)
+
+[node name="spring_arm" type="SpringArm3D" parent="camPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.7)
+shape = SubResource("SeparationRayShape3D_yglq4")
+spring_length = 6.0
+
+[node name="camera" type="Camera3D" parent="camPivot/spring_arm"]
+transform = Transform3D(1, 1.54914e-09, -6.87954e-10, -1.62981e-09, 0.990268, -0.139173, 4.65661e-10, 0.139173, 0.990269, 0, 0.0182246, 6.09616)
+current = true
